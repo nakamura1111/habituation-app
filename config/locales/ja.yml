@@ -3,6 +3,9 @@ ja:
     attributes:
       user:
         nickname: ニックネーム
+      target:
+        name: パラメータ名
+        content: 達成目標
   errors:
     messages:
       invalid: の入力を確認してください

@@ -11,10 +11,10 @@ class TargetsController < ApplicationController
   def create
     @target = Target.new(target_params)
     if @target.save
-      flash[:success] = "Object successfully created"
+      flash[:success] = "パラメータ登録完了"
       redirect_to root_path
     else
-      flash[:error] = "Something went wrong"
+      flash[:error] = "パラメータ登録失敗"
       render 'new'
     end
   end

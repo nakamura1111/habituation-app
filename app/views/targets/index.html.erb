@@ -2,4 +2,5 @@
 <%= link_to "新規登録画面へ遷移", new_user_registration_path %><br />
 <%= link_to "ログイン画面へ遷移", new_user_session_path %><br />
 <%= link_to "ログアウト", destroy_user_session_path, method: :delete %><br />
-<%= link_to "パラメータ設定画面へ遷移", new_target_path %>
+<%= link_to "パラメータ設定画面へ遷移", new_target_path %><br />
+<%= flash[:success] %><br />
