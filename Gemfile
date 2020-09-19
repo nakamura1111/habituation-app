@@ -60,3 +60,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 # デバッグ用
 gem 'pry-rails'
+# 多言語対応
+gem 'rails-i18n'

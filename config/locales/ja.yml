@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        nickname: ニックネーム
+  errors:
+    messages:
+      invalid: の入力を確認してください
