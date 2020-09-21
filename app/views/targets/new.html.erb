@@ -4,11 +4,11 @@
   <%= flash[:error] %><br />
   <%= render "shared/error_messages", model: f.object %><br />
   <div>
-    <%= f.label :content, "達成目標を入力しよう" %><br />
+    <%= f.label :content, "達成目標" %><%= "を入力しよう" %><br />
     <%= f.text_area :content, placeholder: "3ヶ月で体重を〇〇kgから・・kgに落とす！、YY/MM/DDに受ける予定の〇〇試験に合格する！、など" %>
   </div>
   <div>
-    <%= f.label :name, "パラメータ名をつけよう" %><br />
+    <%= f.label :name, "能力値名" %><%= "を名付けよう" %><br />
     <%= f.text_field :name, placeholder: "美しさ、筋力、英語力、数学力など"%>
   </div>
   <%= f.submit "登録" %>
