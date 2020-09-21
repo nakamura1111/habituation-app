@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 2020_09_19_054711) do
     t.string "name", null: false
     t.text "content", null: false
     t.integer "point", null: false
+    t.integer "level", null: false
+    t.integer "exp", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
