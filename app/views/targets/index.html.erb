@@ -2,3 +2,13 @@
 <%= link_to "ログアウト", destroy_user_session_path, method: :delete %><br />
 <%= link_to "パラメータ設定画面へ遷移", new_target_path %><br />
 <%= flash[:success] %><br />
+<div class="target-lists">
+  <% @targets.each do |target| %>
+  <div class="target-box">
+    <%= target.name %><br />
+    <%= "Lv. " %><%= target.level %><br />
+    <progress class="nes-progress" value=target.exp max="10"></progress>
+    <%= "設定日：" %><%= target.created_at.strftime("%Y-%m-%d") %>
+  </div>
+  <% end %>
+</div>
