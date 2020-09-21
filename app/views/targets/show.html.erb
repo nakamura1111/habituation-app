@@ -1,0 +1,10 @@
+<h2>パラメータ詳細表示</h2>
+  <div class="target-box">
+    <%= link_to @target.name, target_path(@target) %><br />
+    <%= "Lv. " %><%= @target.level %><br />
+    <progress class="nes-progress" value=@target.exp max="10"></progress>
+    <%= "設定日：" %><%= @target.created_at.strftime("%Y-%m-%d") %>
+  </div>
+<%= link_to "鍛錬内容の登録画面に遷移", new_target_habit_path(@target) %><br />
+<%= link_to "パラメータ一覧画面に遷移", targets_path %><br />
+<%= flash[:success] %>
