@@ -19,7 +19,7 @@ RSpec.describe Target, type: :model do
         expect(@target.errors.full_messages).to include("達成目標を入力してください")
       end
     end
-    context "点数を登録できない" do
+    context "点数(レベルと経験値を算出するための要素)を登録できない" do
       it "空だと登録できない" do
         @target.point = ''
         @target.valid?
@@ -34,6 +34,40 @@ RSpec.describe Target, type: :model do
         @target.point = Faker::Number.decimal(l_digits: 3, r_digits: 1)
         @target.valid?
         expect(@target.errors.full_messages).to include("Pointは整数で入力してください")
+      end
+    end
+    context "能力レベルを登録できない" do
+      it "空だと登録できない" do
+        @target.level = ''
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Levelを入力してください")
+      end
+      it "数値以外は登録できない" do
+        @target.level = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1)
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Levelは数値で入力してください")
+      end
+      it "整数以外は登録できない" do
+        @target.level = Faker::Number.decimal(l_digits: 3, r_digits: 1)
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Levelは整数で入力してください")
+      end
+    end
+    context "経験値を登録できない" do
+      it "空だと登録できない" do
+        @target.exp = ''
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Expを入力してください")
+      end
+      it "数値以外は登録できない" do
+        @target.exp = Faker::Alphanumeric.alphanumeric(number: 4, min_alpha: 1)
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Expは数値で入力してください")
+      end
+      it "整数以外は登録できない" do
+        @target.exp = Faker::Number.decimal(l_digits: 3, r_digits: 1)
+        @target.valid?
+        expect(@target.errors.full_messages).to include("Expは整数で入力してください")
       end
     end
     context "ユーザを登録できないとき" do
