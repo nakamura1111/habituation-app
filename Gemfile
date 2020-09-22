@@ -67,3 +67,5 @@ gem 'devise'
 gem 'pry-rails'
 # 多言語対応
 gem 'rails-i18n'
+# プルダウン選択用のモデル作成
+gem 'active_hash'
