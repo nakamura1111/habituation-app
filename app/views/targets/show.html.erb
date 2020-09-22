@@ -1,10 +1,38 @@
 <h2>パラメータ詳細表示</h2>
-  <div class="target-box">
-    <%= link_to @target.name, target_path(@target) %><br />
-    <%= "Lv. " %><%= @target.level %><br />
-    <progress class="nes-progress" value=@target.exp max="10"></progress>
-    <%= "設定日：" %><%= @target.created_at.strftime("%Y-%m-%d") %>
-  </div>
+<%# 目標の詳細表示 %>
+<div class="target-box">
+  <%= '能力値名：' %><%= @target.name %><br />
+  <%= '能力値詳細（目標）：' %><%= @target.content %><br />
+  <%= "Lv. " %><%= @target.level %><br />
+  <progress class="nes-progress" value=@target.exp max="10"></progress>
+  <%= "設定日：" %><%= l @target.created_at %>
+</div>
+<%# /目標の詳細表示 %>
+<%# リンク %>
 <%= link_to "鍛錬内容の登録画面に遷移", new_target_habit_path(@target) %><br />
 <%= link_to "パラメータ一覧画面に遷移", targets_path %><br />
 <%= flash[:success] %>
+<%# /リンク %>
+<%# 習慣一覧 %>
+<div class="habit-lists">
+  <% @target.habits.each_with_index do |habit, i| %>
+  <div class="habit-box">
+    <%= '鍛錬の名前：' %><%= habit.name %><br />
+    <%= '難易度：' %><%= Difficulty.find_by(grade: habit.difficulty_grade).name %><br />
+    <%= '達成状況' %><br />
+    <div class="nes-table-responsive">
+      <table class="nes-table is-bordered is-centered">
+        <tr>
+          <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
+          <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
+          <th><%= l Date.today %>
+        </tr>
+        <tr>
+          <th><%= @achieved_statuses[i][6] %></th><th><%= @achieved_statuses[i][5] %></th><th><%= @achieved_statuses[i][4] %></th>
+          <th><%= @achieved_statuses[i][3] %></th><th><%= @achieved_statuses[i][2] %></th><th><%= @achieved_statuses[i][1] %></th>
+          <th><%= @achieved_statuses[i][0] %></th>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+</div>
