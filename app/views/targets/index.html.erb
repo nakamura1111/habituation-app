@@ -5,7 +5,7 @@
 <div class="target-lists">
   <% @targets.each do |target| %>
   <div class="target-box">
-    <%= target.name %><br />
+    <%= link_to target.name, target_path(target) %><br />
     <%= "Lv. " %><%= target.level %><br />
     <progress class="nes-progress" value=target.exp max="10"></progress>
     <%= "設定日：" %><%= target.created_at.strftime("%Y-%m-%d") %>
