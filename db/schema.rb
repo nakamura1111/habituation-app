@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_054711) do
+ActiveRecord::Schema.define(version: 2020_09_21_095008) do
+
+  create_table "habits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "content"
+    t.integer "difficulty_grade", null: false
+    t.integer "achieved_or_not_binary", null: false
+    t.integer "achieved_days", null: false
+    t.boolean "is_active", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["target_id"], name: "index_habits_on_target_id"
+  end
 
   create_table "targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -37,5 +50,6 @@ ActiveRecord::Schema.define(version: 2020_09_19_054711) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "habits", "targets"
   add_foreign_key "targets", "users"
 end
