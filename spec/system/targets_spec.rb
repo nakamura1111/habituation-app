@@ -15,9 +15,10 @@ RSpec.describe '達成目標の登録機能', type: :system do
       fill_in '達成目標', with: @target.content
       fill_in '能力値名', with: @target.name
       # 登録ボタンを押すと、出品情報がDBに登録されることを確認する
-      expect do
-        find('input[name="commit"]').click
-      end.to change { Target.count }.by(1)
+      expect(Target.count).to eq(0)
+      find('input[name="commit"]').click
+      sleep(1)
+      expect(Target.count).to eq(1)
       # トップページに遷移していることを確認する
       expect(current_path).to eq(root_path)
     end
@@ -39,9 +40,10 @@ RSpec.describe '達成目標の登録機能', type: :system do
       fill_in '達成目標', with: ''
       fill_in '能力値名', with: ''
       # 登録ボタンを押しても、出品情報がDBに登録されていないことを確認する
-      expect do
-        find('input[name="commit"]').click
-      end.to change { Target.count }.by(0)
+      expect(Target.count).to eq(0)
+      find('input[name="commit"]').click
+      sleep(1)
+      expect(Target.count).to eq(0)
       # 達成目標の登録画面に遷移していることを確認する
       expect(current_path).to eq(targets_path)
     end

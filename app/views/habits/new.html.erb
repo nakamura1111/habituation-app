@@ -1,6 +1,6 @@
 <h2>鍛錬の登録</h2>
 
-<%= form_for(@habit, url: target_habits_path(@target), method: :post) do |f| %>
+<%= form_with model: @habit, url: target_habits_path(@target), method: :post, local: true do |f| %>
   <%= flash[:error] %><br />
   <%= render "shared/error_messages", model: f.object %><br />
   <div>
@@ -19,4 +19,4 @@
   </div>
   <%= f.submit "登録" %>
 <% end %>
-<%= link_to "戻る", root_path %><br />
+<%= link_to "目標詳細画面に戻る", target_path(@target) %><br />

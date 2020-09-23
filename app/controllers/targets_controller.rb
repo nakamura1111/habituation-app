@@ -15,7 +15,7 @@ class TargetsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "能力値登録失敗"
-      render 'new'
+      render :new
     end
   end
 
