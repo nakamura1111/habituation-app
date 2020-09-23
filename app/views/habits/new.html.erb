@@ -14,7 +14,7 @@
   <div>
     <%= f.label :content, "難易度" %><%= "を決めよう" %><br />
     <div class="nes-select">
-    <%= f.collection_select(:difficulty_grade, Difficulty.all, :grade, :name, {}, {}) %>
+    <%= f.collection_select(:difficulty_grade, Difficulty.all, :id, :name, {}, {}) %>
     </div>
   </div>
   <%= f.submit "登録" %>

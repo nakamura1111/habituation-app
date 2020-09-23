@@ -80,3 +80,60 @@ RSpec.describe '達成目標の一覧機能', type: :system do
     end
   end
 end
+
+RSpec.describe '達成目標の詳細表示機能', type: :system do
+  before do
+    @habit = FactoryBot.create(:habit)
+  end
+  context '達成目標の詳細表示画面へ遷移できるとき' do
+    it 'ログイン状態で遷移できる' do
+      # ログインした上で、達成目標の詳細ページへ遷移する
+      visit_target_show_action(@habit.target)
+      # 無事遷移できていることを確認する
+      expect(current_path).to eq(target_path(@habit.target))
+    end
+  end
+  context '達成目標の詳細表示画面へ遷移できないとき' do
+    it '未ログイン状態では遷移できない' do
+      # 達成目標の詳細ページへ遷移する
+      visit target_path(@habit.target)
+      # ログインページであることを確認する
+      expect(current_path).to eq(new_user_session_path)
+    end
+  end
+  context '達成目標の詳細表示画面で表示されるもの' do
+    it '達成目標について、表示すべき全ての情報が全て載っている' do
+      # ログインした上で、達成目標の詳細ページへ遷移する
+      target = @habit.target
+      visit_target_show_action(target)
+      # 能力値名、レベル、経験値、目標が表示されていることを確認する
+      target_element = find('.target-box')
+      expect( target_element.find('h3.target-name-level') ).to have_content( target.name )
+      expect( target_element.find('h3.target-name-level') ).to have_content( "Lv. #{target.level}" )
+      expect( target_element.find('.nes-progress') ).to have_attributes( value: "#{target.exp}" )
+      expect( target_element.find('.target-content-box') ).to have_content( target.content )
+    end
+    it '習慣の内容について、一部の情報が載っている' do
+      # 達成状況確認のため0以外の数値を入れておく
+      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1<<7)-1))
+      # ログインした上で、達成目標の詳細ページへ遷移する
+      visit_target_show_action(@habit.target)
+      # 鍛錬内容、難易度、達成状況が表示されていることを確認する
+        # 鍛錬内容
+      habit_element = find('.habit-box')
+      expect( habit_element.find('h3.title') ).to have_content( @habit.name )
+        # 難易度
+      expect( habit_element.text ).to have_content( "難易度：#{Difficulty.find(@habit.difficulty_grade).name}" )
+        # 達成状況
+      display_achieved_status(habit_element)
+    end
+    it '習慣登録と目標一覧のリンクが踏める' do
+      # ログインした上で、達成目標の詳細ページへ遷移する
+      target = @habit.target
+      visit_target_show_action(target)
+      # 習慣登録と目標一覧のリンクが踏めることを確認する
+      expect(page).to have_link('鍛錬内容の登録画面に遷移', href: new_target_habit_path(target))
+      expect(page).to have_link('パラメータ一覧画面に遷移', href: targets_path)
+    end
+  end
+end

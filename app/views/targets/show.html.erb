@@ -2,7 +2,7 @@
   <h2 class="title">パラメータ詳細表示</h2>
   <%# 目標の詳細表示 %>
   <div class="nes-container with-title target-box">
-    <h3 class="title"><%= "#{@target.name} - Lv. #{@target.level}" %></h3>
+    <h3 class="title target-name-level"><%= "#{@target.name} - Lv. #{@target.level}" %></h3>
     <div class="target-exp-box">
       <div class="exp-string"><%= "exp:" %></div>
       <progress class="nes-progress is-success exp-bar" value=@target.exp max="10"></progress>
@@ -29,17 +29,17 @@
     <% @target.habits.each_with_index do |habit, i| %>
     <div class="nes-container with-title habit-box">
       <h3 class='title'><%= habit.name %></h3>
-      <%= '難易度：' %><%= Difficulty.find_by(grade: habit.difficulty_grade).name %><br />
+      <p><%= '難易度：' %><%= Difficulty.find(habit.difficulty_grade).name %></p>
       <div>
         <h3><%= '達成状況' %></h3>
         <div class="nes-table-responsive">
           <table class="nes-table is-bordered is-centered">
-            <tr>
+            <tr class="date-row">
               <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
               <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
               <th><%= l Date.today %>
             </tr>
-            <tr>
+            <tr class="achieved-status-row">
               <th><%= @achieved_statuses[i][6] %></th><th><%= @achieved_statuses[i][5] %></th><th><%= @achieved_statuses[i][4] %></th>
               <th><%= @achieved_statuses[i][3] %></th><th><%= @achieved_statuses[i][2] %></th><th><%= @achieved_statuses[i][1] %></th>
               <th><%= @achieved_statuses[i][0] %></th>
