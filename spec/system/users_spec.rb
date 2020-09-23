@@ -62,7 +62,8 @@ RSpec.describe 'ログイン', type: :system do
       # ログインボタンを押す
       find('input[name="commit"]').click
       # トップページへ遷移しているか確認
-      expect(current_path).to eq root_path
+      sleep(1)
+      expect(current_path).to eq(root_path)
     end
   end
   context 'ログインできないとき' do

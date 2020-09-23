@@ -7,6 +7,5 @@ Rails.application.routes.draw do
   end
   # 再読み込みが発生した際の処理
   get '/users', to: 'users#retake_registration'
-  get '/targets', to: 'targets#new'
   get '/targets/:target_id/habits', to: 'habits#new'
 end

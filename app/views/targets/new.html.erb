@@ -1,6 +1,6 @@
 <h2>パラメータ設定</h2>
 
-<%= form_for(@target, url: targets_path(@target), method: :post) do |f| %>
+<%= form_with model: @target, url: targets_path, method: :post, local: true do |f| %>
   <%= flash[:error] %><br />
   <%= render "shared/error_messages", model: f.object %><br />
   <div>

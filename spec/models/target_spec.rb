@@ -14,7 +14,7 @@ RSpec.describe Target, type: :model do
       it "21文字以上だと登録できない" do
         @target.name = Faker::Lorem.paragraph_by_chars(number: 21)
         @target.valid?
-        expect(@terget.errors.full_messages).to include('パラメータ名は20文字以内で入力してください')
+        expect(@target.errors.full_messages).to include('パラメータ名は20文字以内で入力してください')
       end
     end
     context "目標を登録できない" do
@@ -26,7 +26,7 @@ RSpec.describe Target, type: :model do
       it "501文字以上だと登録できない" do
         @target.content = Faker::Lorem.paragraph_by_chars(number: 501)
         @target.valid?
-        expect(@terget.errors.full_messages).to include('達成目標は500文字以内で入力してください')
+        expect(@target.errors.full_messages).to include('達成目標は500文字以内で入力してください')
       end
     end
     context "点数(レベルと経験値を算出するための要素)を登録できない" do

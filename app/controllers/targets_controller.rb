@@ -15,12 +15,19 @@ class TargetsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = "能力値登録失敗"
-      render 'new'
+      render :new
     end
   end
 
   def show
     @target = Target.find(params[:id])
+    # 習慣の達成状況を表示する日数を設定
+    @num_days = 7
+    # 達成状況を配列形式に変換
+    @achieved_statuses = []
+    @target.habits.each do |habit|
+      @achieved_statuses << set_achieved_status( @num_days, habit.achieved_or_not_binary)
+    end
   end
 
   private
@@ -32,10 +39,24 @@ class TargetsController < ApplicationController
     params.require(:target).permit(:name, :content).merge(user: current_user, point: point, level: level, exp: exp)
   end
 
-  # 10expでレベルが1上がる設定になっています。(仮設定)
+  # 10expでレベルが1上がる設定になっている。(仮設定)
   def level_and_exp_calc(point)
     level = point/10 + 1
     exp = point%10
     return level, exp
+  end
+
+  # 二進数データをview表示の形式に置き換える
+  def set_achieved_status(num_days, achieved_or_not_binary)
+    status = []
+    num_days.times do |i|
+      # 新しい順に判定する
+      if ( ( achieved_or_not_binary >> i ) & 1 ) == 1
+        status.push("〇")    # 新しいデータが先頭になるように格納
+      else
+        status.push("×")
+      end
+    end
+    return status
   end
 end

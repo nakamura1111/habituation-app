@@ -1,7 +1,7 @@
 class Habit < ApplicationRecord
   validates :content, length: { maximum: 500 }
   with_options presence: true do
-    validates :name, length: { maximum: 50 }
+    validates :name, length: { maximum: 50, allow_blank: true }
     with_options numericality: { only_integer: true, allow_blank: true } do
       validates :difficulty_grade 
       validates :achieved_or_not_binary 
