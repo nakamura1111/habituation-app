@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :targets, only: [:index, :new, :create, :show] do
     resources :habits, only: [:new, :create]
   end
+  resources :habits_achieved_statuses, only: [:index, :update]
   # 再読み込みが発生した際の処理
   get '/users', to: 'users#retake_registration'
   get '/targets/:target_id/habits', to: 'habits#new'
