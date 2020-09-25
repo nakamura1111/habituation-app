@@ -11,5 +11,8 @@ consumer.subscriptions.create("HabitsAchievedStatusChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
+    console.log(data.content.id);
+    const achievedCheckCell = document.getElementById(`achieved-check-cell-${data.content.id}`);
+    achievedCheckCell.innerHTML = '〇';
   }
 });

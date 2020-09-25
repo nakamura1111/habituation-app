@@ -45,8 +45,8 @@
               <% if @achieved_statuses[i][0] == "〇" %>
               <th><%= @achieved_statuses[i][0] %></th>
               <% else %>
-              <th>
-              <%= link_to "チェック", target_habit_update_achieved_status_path(@target, habit), method: :put %>
+              <th id=<%="achieved-check-cell-#{habit.id}"%> >
+              <%= link_to "チェック", target_habit_update_achieved_status_path(@target, habit), method: :put, id: "habit-achieved-check-#{habit.id}" %>
               </th>
               <% end %>
             </tr>

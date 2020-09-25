@@ -20,7 +20,7 @@ class HabitsController < ApplicationController
     @habit = Habit.find(params[:habit_id])
     if update_transaction(@habit)
       flash[:success] = "更新しました"
-      ActionCable.server.broadcast 'habits_achieved_status', content: @habit
+      ActionCable.server.broadcast 'habits_achieved_status_channel', content: @habit
     else
       flash[:error] = "更新できませんでした"
       render :index
@@ -40,12 +40,12 @@ class HabitsController < ApplicationController
   def update_transaction(habit)
     ActiveRecord::Base.transaction do
       is_add = habit.achieved_or_not_binary&1       # Targetのpointが増えるかどうかを判定
-      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1 )
+      habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1 , achieved_days: habit.achieved_days + 1)
       add_target_point(habit, is_add)
       return true
     end
   end
-
+  # Targetモデルに移動させたい
   def add_target_point(habit, is_add)
     if is_add
       point = habit.target.point + habit.difficulty_grade + 1
