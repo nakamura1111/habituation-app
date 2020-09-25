@@ -42,7 +42,13 @@
             <tr class="achieved-status-row">
               <th><%= @achieved_statuses[i][6] %></th><th><%= @achieved_statuses[i][5] %></th><th><%= @achieved_statuses[i][4] %></th>
               <th><%= @achieved_statuses[i][3] %></th><th><%= @achieved_statuses[i][2] %></th><th><%= @achieved_statuses[i][1] %></th>
+              <% if @achieved_statuses[i][0] == "〇" %>
               <th><%= @achieved_statuses[i][0] %></th>
+              <% else %>
+              <th>
+              <%= link_to "チェック", target_habit_update_achieved_status_path(@target, habit), method: :put %>
+              </th>
+              <% end %>
             </tr>
           </table>
         </div>
@@ -50,4 +56,5 @@
     </div>
     <% end %>
   </div>
+  <%# /習慣一覧 %>
 </div>

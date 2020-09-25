@@ -26,7 +26,7 @@ class TargetsController < ApplicationController
     # 達成状況を配列形式に変換
     @achieved_statuses = []
     @target.habits.each do |habit|
-      @achieved_statuses << set_achieved_status( @num_days, habit.achieved_or_not_binary)
+      @achieved_statuses << set_achieved_status( @num_days, habit.achieved_or_not_binary )
     end
   end
 
@@ -46,7 +46,7 @@ class TargetsController < ApplicationController
     return level, exp
   end
 
-  # 二進数データをview表示の形式に置き換える
+  # 二進数データをview表示の形式に置き換える　（HabitsAchievedStatusesControllerにもう一個同じメソッドがあるので統合する必要あり）
   def set_achieved_status(num_days, achieved_or_not_binary)
     status = []
     num_days.times do |i|
