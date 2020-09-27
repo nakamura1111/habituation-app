@@ -12,6 +12,9 @@
   margin: 10px;
   background-color: white;
 }
+.target-level{
+  margin: 10px;
+}
 .target-exp-box{
   display: flex;
   align-items: center;
