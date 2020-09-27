@@ -2,10 +2,11 @@
   <h2 class="title">パラメータ詳細表示</h2>
   <%# 目標の詳細表示 %>
   <div class="nes-container with-title target-box">
-    <h3 class="title target-name-level"><%= "#{@target.name} - Lv. #{@target.level}" %></h3>
+    <h3 class="title" ><%= @target.name %></h3>
+    <div class="target-level" id="target-level"><%= "Lv. #{@target.level}" %></div>
     <div class="target-exp-box">
       <div class="exp-string"><%= "exp:" %></div>
-      <progress class="nes-progress is-success exp-bar" value=@target.exp max="10"></progress>
+      <progress class="nes-progress is-success exp-bar" id="exp-bar" value=<%= @target.exp %> max="10"></progress>
     </div>
     <div class="nes-container with-title target-content-box">
       <h3 class="title"><%= '能力値詳細（目標）' %></h3>

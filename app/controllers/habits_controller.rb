@@ -19,8 +19,10 @@ class HabitsController < ApplicationController
   def update_achieved_status
     @habit = Habit.find(params[:habit_id])
     if update_transaction(@habit)
+      @habit.reload
       flash[:success] = "更新しました"
       ActionCable.server.broadcast 'habits_achieved_status_channel', content: @habit
+      ActionCable.server.broadcast 'targets_achieved_status_channel', content: @habit.target
     else
       flash[:error] = "更新できませんでした"
       render :index
@@ -49,8 +51,17 @@ class HabitsController < ApplicationController
   def add_target_point(habit, is_add)
     if is_add
       point = habit.target.point + habit.difficulty_grade + 1
-      habit.target.update(point: point)
+      level, exp = level_and_exp_calc(point)
+      habit.target.update(point: point, level: level, exp: exp)
     end
     return true
+  end
+
+  # 10expでレベルが1上がる設定になっている。(仮設定)
+  # 被っているので、モデルに移動させる
+  def level_and_exp_calc(point)
+    level = point/10 + 1
+    exp = point%10
+    return level, exp
   end
 end
