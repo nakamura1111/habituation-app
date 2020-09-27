@@ -1,6 +1,6 @@
 class TargetsAchievedStatusChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "targets_achieved_status_channel"
+    stream_from 'targets_achieved_status_channel'
   end
 
   def unsubscribed

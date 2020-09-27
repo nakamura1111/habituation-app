@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   def move_to_login
-    redirect_to new_user_session_path if !(user_signed_in?) && !(params[:controller].include?("devise/"))
+    redirect_to new_user_session_path if !user_signed_in? && !params[:controller].include?('devise/')
   end
 end

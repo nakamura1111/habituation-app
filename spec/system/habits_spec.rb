@@ -63,12 +63,12 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
       @habit.reload
       expect(@habit.achieved_or_not_binary).to eq(1)
       expect(@habit.achieved_days).to eq(1)
-      expect(all("tr.achieved-status-row th")[6]).to have_content("〇")
+      expect(all('tr.achieved-status-row th')[6]).to have_content('〇')
       # レベル・経験値が反映されていることを確認する
       @target.reload
-      expect(@target.point).to eq( @prev_point + @habit.difficulty_grade+1 )    # point
-      expect(find(".target-level").text).to eq("Lv. #{@target.level} - Level up!")   # level
-      expect(find(".exp-bar")[:value].to_i).to eq(@target.exp)                       # exp
+      expect(@target.point).to eq(@prev_point + @habit.difficulty_grade + 1) # point
+      expect(find('.target-level').text).to eq("Lv. #{@target.level} - Level up!")   # level
+      expect(find('.exp-bar')[:value].to_i).to eq(@target.exp)                       # exp
     end
   end
 end
