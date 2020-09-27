@@ -108,8 +108,8 @@ RSpec.describe '達成目標の詳細表示機能', type: :system do
       visit_target_show_action(target)
       # 能力値名、レベル、経験値、目標が表示されていることを確認する
       target_element = find('.target-box')
-      expect( target_element.find('h3.target-name-level') ).to have_content( target.name )
-      expect( target_element.find('h3.target-name-level') ).to have_content( "Lv. #{target.level}" )
+      expect( target_element.find('h3.target-name') ).to have_content( target.name )
+      expect( target_element.find('.target-level') ).to have_content( "Lv. #{target.level}" )
       expect( target_element.find('.nes-progress') ).to have_attributes( value: "#{target.exp}" )
       expect( target_element.find('.target-content-box') ).to have_content( target.content )
     end
