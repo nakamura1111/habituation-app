@@ -54,29 +54,29 @@ RSpec.describe '達成目標の一覧機能', type: :system do
   before do
     @target = FactoryBot.create(:target)
   end
-  context '達成目標一覧が見られるとき' do
-    it 'ログインしている場合、自分の目標一覧に遷移できる' do
+  context "達成目標一覧が見られるとき" do
+    it "ログインしている場合、自分の目標一覧に遷移できる" do
       # ログインする（トップページに遷移していることを確認済み）
       login_user(@target.user)
     end
   end
-  context '達成目標一覧が見られないとき' do
-    it '未ログインユーザは目標一覧には遷移できない' do
+  context "達成目標一覧が見られないとき" do
+    it "未ログインユーザは目標一覧には遷移できない" do
       # トップページに遷移する
       visit root_path
       # ログインページであることを確認する
       expect(current_path).to eq(new_user_session_path)
     end
   end
-  context '表示されているもの' do
-    it '目標一覧には、能力値名・レベル・経験値が表示されている' do
+  context "表示されているもの" do
+    it "目標一覧には、能力値名・レベル・経験値が表示されている" do
       # ログインする（トップページに遷移していることを確認済み）
       login_user(@target.user)
       # 表示されていることを確認
       target_element = find('.target-box')
       expect(target_element).to have_content(@target.name)
       expect(target_element).to have_content("Lv. #{@target.level}")
-      expect(target_element.find('.nes-progress')).to have_attributes(value: @target.exp.to_s)
+      expect(target_element.find('.nes-progress')).to have_attributes(value: "#{@target.exp}")
     end
   end
 end
@@ -108,23 +108,23 @@ RSpec.describe '達成目標の詳細表示機能', type: :system do
       visit_target_show_action(target)
       # 能力値名、レベル、経験値、目標が表示されていることを確認する
       target_element = find('.target-box')
-      expect(target_element.find('h3.target-name')).to have_content(target.name)
-      expect(target_element.find('.target-level')).to have_content("Lv. #{target.level}")
-      expect(target_element.find('.nes-progress')).to have_attributes(value: target.exp.to_s)
-      expect(target_element.find('.target-content-box')).to have_content(target.content)
+      expect( target_element.find('h3.target-name-level') ).to have_content( target.name )
+      expect( target_element.find('h3.target-name-level') ).to have_content( "Lv. #{target.level}" )
+      expect( target_element.find('.nes-progress') ).to have_attributes( value: "#{target.exp}" )
+      expect( target_element.find('.target-content-box') ).to have_content( target.content )
     end
     it '習慣の内容について、一部の情報が載っている' do
       # 達成状況確認のため0以外の数値を入れておく
-      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1))
+      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1<<7)-1))
       # ログインした上で、達成目標の詳細ページへ遷移する
       visit_target_show_action(@habit.target)
       # 鍛錬内容、難易度、達成状況が表示されていることを確認する
-      # 鍛錬内容
+        # 鍛錬内容
       habit_element = find('.habit-box')
-      expect(habit_element.find('h3.title')).to have_content(@habit.name)
-      # 難易度
-      expect(habit_element.text).to have_content("難易度：#{Difficulty.find(@habit.difficulty_grade).name}")
-      # 達成状況
+      expect( habit_element.find('h3.title') ).to have_content( @habit.name )
+        # 難易度
+      expect( habit_element.text ).to have_content( "難易度：#{Difficulty.find(@habit.difficulty_grade).name}" )
+        # 達成状況
       display_achieved_status(habit_element)
     end
     it '習慣登録と目標一覧のリンクが踏める' do
