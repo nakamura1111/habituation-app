@@ -46,7 +46,7 @@
               <th><%= @achieved_statuses[i][0] %></th>
               <% else %>
               <th id=<%="achieved-check-cell-#{habit.id}"%> >
-              <%= link_to "チェック", target_habit_update_achieved_status_path(@target, habit), method: :put, id: "habit-achieved-check-#{habit.id}" %>
+              <%= link_to "達成したらチェック", target_habit_update_achieved_status_path(@target, habit), method: :put, id: "habit-achieved-check-#{habit.id}" %>
               </th>
               <% end %>
             </tr>
