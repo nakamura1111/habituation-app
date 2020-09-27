@@ -1,3 +1,4 @@
+# 各アクションの実行前に行う共通処理を記載する
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   # before_action :basic_auth
@@ -16,6 +17,6 @@ class ApplicationController < ActionController::Base
   end
 
   def move_to_login
-    redirect_to new_user_session_path if !(user_signed_in?) && !(params[:controller].include?("devise/"))
+    redirect_to new_user_session_path if !user_signed_in? && !params[:controller].include?('devise/')
   end
 end

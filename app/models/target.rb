@@ -1,3 +1,4 @@
+# 目標に関するデータを管理するためのモデル
 class Target < ApplicationRecord
   with_options presence: true do
     validates :name, length: { maximum: 20, allow_blank: true }
