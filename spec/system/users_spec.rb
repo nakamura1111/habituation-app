@@ -41,6 +41,7 @@ RSpec.describe '新規登録', type: :system do
       end.to change { User.count }.by(0)
       # 新規登録ページへ戻されるか確認
       expect(current_path).to eq(user_registration_path)
+      # 
     end
   end
 end
