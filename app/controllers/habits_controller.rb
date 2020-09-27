@@ -1,3 +1,4 @@
+# 習慣に関する機能を実装するためのコントローラー
 class HabitsController < ApplicationController
   before_action :current_target, only: [:new, :create]
 

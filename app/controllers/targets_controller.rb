@@ -1,3 +1,4 @@
+# 目標に関する機能を実装するためのコントローラー
 class TargetsController < ApplicationController
   def index
     @targets = Target.where(user: current_user).includes(:user)
