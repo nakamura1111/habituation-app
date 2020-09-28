@@ -7,4 +7,16 @@ module HabitSupport
     # 習慣の登録画面の遷移のリンクをクリックする
     find_link('鍛錬内容の登録画面に遷移', href: new_target_habit_path(target)).click
   end
+  # 目標詳細ページに記載の目標達成状況の表が正しく反映されていることを確認するメソッド
+  def confirm_achieved_status(achieved_or_not_binary)
+    days = 7
+    days.times do |i|
+      if ( achieved_or_not_binary>>(days-1-i) & 1 ) == 1
+        display = '〇'
+      else
+        display = '×'
+      end
+      expect(all('tr.achieved-status-row th')[i]).to have_content(display)
+    end
+  end
 end

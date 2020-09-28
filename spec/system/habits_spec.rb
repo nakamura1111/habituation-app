@@ -71,4 +71,29 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
       expect(find('.exp-bar')[:value].to_i).to eq(@target.exp)                       # exp
     end
   end
+end 
+
+RSpec.describe '日付変更による達成状況を変更する機能', type: :system do
+  before do
+    @habit = FactoryBot.create(:habit)
+    @target = @habit.target
+    @achieved_or_not_binary = 0b101_0101
+    @habit.update(achieved_or_not_binary: @achieved_or_not_binary)
+  end
+  context '日付変更による達成状況を変更することができるとき' do
+    it '24:00に達成状況が変更される' do
+      # ログインして、目標の詳細ページに遷移
+      visit_target_show_action(@target)
+      # 目標達成状況が正しく出力されていることを確認する
+      confirm_achieved_status(@habit.achieved_or_not_binary)
+      # 日付を跨ぐ
+      time_now = Time.now
+      travel_to Time.zone.local(time_now.year, time_now.mon, time_now.day+1, 0, 0, 1) do
+        # 目標達成状況が正しく反映されていることを確認する
+        @habit.reload
+        visit target_path(@target)
+        confirm_achieved_status(@habit.achieved_or_not_binary)
+      end
+    end
+  end
 end

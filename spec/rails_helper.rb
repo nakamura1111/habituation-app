@@ -36,6 +36,8 @@ RSpec.configure do |config|
   config.include UserSupport
   config.include TargetSupport
   config.include HabitSupport
+  # travel_toメソッドを使用するため https://thr3a.hatenablog.com/entry/20190307/1551892974
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
