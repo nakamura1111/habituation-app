@@ -59,6 +59,8 @@ end
 group :production do
   # Herokuへのデプロイに必要
   gem 'rails_12factor'
+  # actionCable 使うのに必要らしい https://qiita.com/NaokiIshimura/items/024c3d35ddc3188a0524
+  gem 'redis-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
