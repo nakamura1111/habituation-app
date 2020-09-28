@@ -31,4 +31,11 @@ class Habit < ApplicationRecord
   #   end
   #   return statuses
   # end
+  # 達成状況の記録を日付を跨いだ際に変更するメソッド
+  def self.update_achieved_status_by_day_progress
+    habits = Habit.all.includes(:target)
+    habits.each do |habit|
+      habit.update( achieved_or_not_binary: habit.achieved_or_not_binary<<1 )
+    end
+  end
 end
