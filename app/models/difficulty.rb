@@ -1,3 +1,4 @@
+# 習慣の難易度を選択するためのDBのないモデル
 class Difficulty < ActiveHash::Base
   self.data = [
     { id: 0, name: '楽勝' },
