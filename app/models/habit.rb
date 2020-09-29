@@ -18,19 +18,23 @@ class Habit < ApplicationRecord
   belongs_to_active_hash :difficulty
   belongs_to_active_hash :achieved_status
 
-  # # 二進数データをview表示の形式に置き換える
-  # def Habit.set_achieved_status(num_days)
-  #   statuses = []
-  #   num_days.times do |i|
-  #     # 新しい順に判定する
-  #     if ( ( achieved_or_not_binary >> i ) & 1 ) == 1
-  #       statuses.push("〇")    # 新しいデータが先頭になるように格納
-  #     else
-  #       statuses.push("×")
-  #     end
-  #   end
-  #   return statuses
-  # end
+  # クラス変数の設定
+  @@num_days = 7
+
+  # 二進数データをview表示の形式に置き換える
+  def self.set_achieved_status(achieved_or_not_binary)
+    statuses = []
+    @@num_days.times do |i|
+      # 新しい順に判定する
+      if ( ( achieved_or_not_binary >> i ) & 1 ) == 1
+        statuses.push("〇")    # 新しいデータが先頭になるように格納
+      else
+        statuses.push("×")
+      end
+    end
+    return statuses
+  end
+
   # 達成状況の記録を日付を跨いだ際に変更するメソッド
   def self.update_achieved_status_by_day_progress
     habits = Habit.all.includes(:target)
