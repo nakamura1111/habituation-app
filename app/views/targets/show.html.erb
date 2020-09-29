@@ -50,28 +50,28 @@
     <div class="nes-container with-title habit-box">
       <h3 class='title'><%= habit.name %></h3>
       <p><%= '難易度：' %><%= Difficulty.find(habit.difficulty_grade).name %></p>
-      <div>
-        <h3><%= '達成状況' %></h3>
-        <div class="nes-table-responsive">
-          <table class="nes-table is-bordered is-centered">
-            <tr class="date-row">
-              <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
-              <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
-              <th><%= l Date.today %>
-            </tr>
-            <tr class="achieved-status-row">
-              <th><%= @achieved_statuses[i][6] %></th><th><%= @achieved_statuses[i][5] %></th><th><%= @achieved_statuses[i][4] %></th>
-              <th><%= @achieved_statuses[i][3] %></th><th><%= @achieved_statuses[i][2] %></th><th><%= @achieved_statuses[i][1] %></th>
-              <% if @achieved_statuses[i][0] == "〇" %>
-              <th><%= @achieved_statuses[i][0] %></th>
-              <% else %>
-              <th id=<%="achieved-check-cell-#{habit.id}"%> >
+      <%# 達成状況を表示するテーブル %>
+      <h3><%= '達成状況' %></h3>
+      <div class="nes-table-responsive">
+        <table class="nes-table is-bordered is-centered">
+          <tr class="date-row">
+            <th><%= l Date.today-6 %></th><th><%= l Date.today-5 %></th><th><%= l Date.today-4 %></th>
+            <th><%= l Date.today-3 %></th><th><%= l Date.today-2 %></th><th><%= l Date.today-1 %></th>
+            <th><%= l Date.today %>
+          </tr>
+          <tr class="achieved-status-row">
+            <th><%= @achieved_statuses[i][6] %></th><th><%= @achieved_statuses[i][5] %></th><th><%= @achieved_statuses[i][4] %></th>
+            <th><%= @achieved_statuses[i][3] %></th><th><%= @achieved_statuses[i][2] %></th><th><%= @achieved_statuses[i][1] %></th>
+            <%# 当日のみ達成できたかどうか、のチェック機能をつける %>
+            <% if @achieved_statuses[i][0] == "〇" %>
+            <th><%= @achieved_statuses[i][0] %></th>
+            <% else %>
+            <th id=<%="achieved-check-cell-#{habit.id}"%> >
               <%= link_to "達成したらチェック", target_habit_update_achieved_status_path(@target, habit), method: :put, id: "habit-achieved-check-#{habit.id}" %>
-              </th>
-              <% end %>
-            </tr>
-          </table>
-        </div>
+            </th>
+            <% end %>
+          </tr>
+        </table>
       </div>
     </div>
     <% end %>

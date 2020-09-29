@@ -22,6 +22,7 @@ class HabitsController < ApplicationController
     if update_transaction(@habit)
       @habit.reload
       flash[:success] = '更新しました'
+      # channelを用いて、DBの変更をビューファイルに即時反映
       ActionCable.server.broadcast 'habits_achieved_status_channel', content: @habit
       ActionCable.server.broadcast 'targets_achieved_status_channel', content: @habit.target
     else
@@ -40,30 +41,31 @@ class HabitsController < ApplicationController
     @target = Target.find(params[:target_id])
   end
 
+  # 達成状況と能力値の変動をDBに記録するメソッド
   def update_transaction(habit)
     ActiveRecord::Base.transaction do
       is_add = habit.achieved_or_not_binary & 1 # Targetのpointが増えるかどうかを判定
       habit.update(achieved_or_not_binary: habit.achieved_or_not_binary | 1, achieved_days: habit.achieved_days + 1)
-      add_target_point(habit, is_add)
+      Target.add_target_point(habit, is_add)
       return true
     end
   end
 
-  # Targetモデルに移動させたい
-  def add_target_point(habit, is_add)
-    if is_add
-      point = habit.target.point + habit.difficulty_grade + 1
-      level, exp = level_and_exp_calc(point)
-      habit.target.update(point: point, level: level, exp: exp)
-    end
-    true
-  end
+  # # Targetモデルに移動させたい
+  # def add_target_point(habit, is_add)
+  #   if is_add
+  #     point = habit.target.point + habit.difficulty_grade + 1
+  #     level, exp = level_and_exp_calc(point)
+  #     habit.target.update(point: point, level: level, exp: exp)
+  #   end
+  #   true
+  # end
 
-  # 10expでレベルが1上がる設定になっている。(仮設定)
-  # 被っているので、モデルに移動させる
-  def level_and_exp_calc(point)
-    level = point / 10 + 1
-    exp = point % 10
-    [level, exp]
-  end
+  # # 10expでレベルが1上がる設定になっている。(仮設定)
+  # # 被っているので、モデルに移動させる
+  # def level_and_exp_calc(point)
+  #   level = point / 10 + 1
+  #   exp = point % 10
+  #   [level, exp]
+  # end
 end

@@ -1,5 +1,6 @@
 # 習慣に関するデータを管理するためのモデル
 class Habit < ApplicationRecord
+  # バリデーション
   validates :content, length: { maximum: 500 }
   with_options presence: true do
     validates :name, length: { maximum: 50, allow_blank: true }
@@ -11,6 +12,7 @@ class Habit < ApplicationRecord
   end
   validates :is_active, inclusion: { in: [true, false] }
 
+  # アソシエーション
   belongs_to :target
 
   # ActiveHashによるアソシエーション

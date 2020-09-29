@@ -33,16 +33,16 @@ class TargetsController < ApplicationController
   def target_params
     point = params[:target][:point]
     point = 0 if point.nil? # 初期値設定
-    level, exp = level_and_exp_calc(point)
+    level, exp = Target.level_and_exp_calc(point)
     params.require(:target).permit(:name, :content).merge(user: current_user, point: point, level: level, exp: exp)
   end
 
-  # 10expでレベルが1上がる設定になっている。(仮設定)
-  def level_and_exp_calc(point)
-    level = point / 10 + 1
-    exp = point % 10
-    [level, exp]
-  end
+  # # 10expでレベルが1上がる設定になっている。(仮設定)
+  # def level_and_exp_calc(point)
+  #   level = point / 10 + 1
+  #   exp = point % 10
+  #   [level, exp]
+  # end
 
   # # 二進数データをview表示の形式に置き換える　（HabitsAchievedStatusesControllerにもう一個同じメソッドがあるので統合する必要あり）
   # def set_achieved_status(num_days, achieved_or_not_binary)
