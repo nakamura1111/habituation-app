@@ -6,9 +6,13 @@
   background-color: lightgreen;
 }
 
-/* 目標の詳細表示 */
-.target-box{
+/* 目標の一覧表示 */
+.target-lists{
   width: 95%;
+  margin: 10px;
+  background-color: green;
+}
+.target-box{
   margin: 10px;
   background-color: white;
 }
@@ -26,10 +30,8 @@
   width: 50%;
   margin: 10px;
 }
-.target-content-box{
-  margin: 10px;
-}
-/* /目標の詳細表示 */
+/* /目標の一覧表示 */
+
 /* リンク */
 .links{
   width: 95%;
@@ -40,14 +42,3 @@
   display: flex;
 }
 /* /リンク */
-/* 習慣一覧 */
-.habit-lists{
-  width: 95%;
-  margin: 10px;
-  background-color: green;
-}
-.habit-box{
-  margin: 10px;
-  background-color: white;
-}
-/* /習慣一覧 */
