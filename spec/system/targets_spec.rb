@@ -10,10 +10,10 @@ RSpec.describe '達成目標の登録機能', type: :system do
       # ログインする（トップページに遷移していることを確認済み）
       login_user(@target.user)
       # 達成目標登録画面へ遷移する
-      find_link('パラメータ設定画面へ遷移', href: new_target_path).click
+      find_link('目標を設定', href: new_target_path).click
       # 達成目標の登録フォームに入力する
-      fill_in '達成目標', with: @target.content
-      fill_in '能力値名', with: @target.name
+      fill_in 'target_content', with: @target.content
+      fill_in 'target_name', with: @target.name
       # 登録ボタンを押すと、出品情報がDBに登録されることを確認する
       expect(Target.count).to eq(0)
       find('input[name="commit"]').click
@@ -34,11 +34,11 @@ RSpec.describe '達成目標の登録機能', type: :system do
       # ログインする（トップページに遷移していることを確認済み）
       login_user(@target.user)
       # 達成目標登録画面へ遷移する
-      find_link('パラメータ設定画面へ遷移', href: new_target_path).click
+      find_link('目標を設定', href: new_target_path).click
       sleep(1)
       # 達成目標の登録フォームの入力
-      fill_in '達成目標', with: ''
-      fill_in '能力値名', with: ''
+      fill_in 'target_content', with: ''
+      fill_in 'target_name', with: ''
       # 登録ボタンを押しても、出品情報がDBに登録されていないことを確認する
       expect(Target.count).to eq(0)
       find('input[name="commit"]').click
@@ -132,8 +132,8 @@ RSpec.describe '達成目標の詳細表示機能', type: :system do
       target = @habit.target
       visit_target_show_action(target)
       # 習慣登録と目標一覧のリンクが踏めることを確認する
-      expect(page).to have_link('鍛錬内容の登録画面に遷移', href: new_target_habit_path(target))
-      expect(page).to have_link('パラメータ一覧画面に遷移', href: targets_path)
+      expect(page).to have_link('鍛錬メニューを追加', href: new_target_habit_path(target))
+      expect(page).to have_link('目標の一覧', href: targets_path)
     end
   end
 end

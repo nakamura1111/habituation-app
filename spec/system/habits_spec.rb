@@ -10,8 +10,8 @@ RSpec.describe '習慣の登録機能', type: :system do
       # ログインして、習慣登録ページに遷移
       visit_habit_new_action(@habit.target)
       # 達成目標の登録フォームに入力する
-      fill_in '鍛錬の内容', with: @habit.name
-      fill_in '鍛錬の詳細な内容', with: @habit.content
+      fill_in 'habit_name', with: @habit.name
+      fill_in 'habit_content', with: @habit.content
       select Difficulty.find(@habit.difficulty_grade).name, from: 'habit[difficulty_grade]'
       # 登録ボタンを押すと、出品情報がDBに登録されることを確認する
       expect do
@@ -32,8 +32,8 @@ RSpec.describe '習慣の登録機能', type: :system do
       # ログインして、習慣登録ページに遷移
       visit_habit_new_action(@habit.target)
       # 達成目標の登録フォームの入力
-      fill_in '鍛錬の内容', with: ''
-      fill_in '鍛錬の詳細な内容', with: ''
+      fill_in 'habit_name', with: ''
+      fill_in 'habit_content', with: ''
       # 登録ボタンを押しても、出品情報がDBに登録されていないことを確認する
       expect do
         find('input[name="commit"]').click
