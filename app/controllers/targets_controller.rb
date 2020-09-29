@@ -21,12 +21,10 @@ class TargetsController < ApplicationController
 
   def show
     @target = Target.find(params[:id])
-    # 習慣の達成状況を表示する日数を設定
-    @num_days = 7
     # 達成状況を配列形式に変換
     @achieved_statuses = []
     @target.habits.each do |habit|
-      @achieved_statuses << set_achieved_status(@num_days, habit.achieved_or_not_binary)
+      @achieved_statuses << Habit.set_achieved_status(habit.achieved_or_not_binary)
     end
   end
 
@@ -35,28 +33,28 @@ class TargetsController < ApplicationController
   def target_params
     point = params[:target][:point]
     point = 0 if point.nil? # 初期値設定
-    level, exp = level_and_exp_calc(point)
+    level, exp = Target.level_and_exp_calc(point)
     params.require(:target).permit(:name, :content).merge(user: current_user, point: point, level: level, exp: exp)
   end
 
-  # 10expでレベルが1上がる設定になっている。(仮設定)
-  def level_and_exp_calc(point)
-    level = point / 10 + 1
-    exp = point % 10
-    [level, exp]
-  end
+  # # 10expでレベルが1上がる設定になっている。(仮設定)
+  # def level_and_exp_calc(point)
+  #   level = point / 10 + 1
+  #   exp = point % 10
+  #   [level, exp]
+  # end
 
-  # 二進数データをview表示の形式に置き換える　（HabitsAchievedStatusesControllerにもう一個同じメソッドがあるので統合する必要あり）
-  def set_achieved_status(num_days, achieved_or_not_binary)
-    status = []
-    num_days.times do |i|
-      # 新しい順に判定する
-      if ((achieved_or_not_binary >> i) & 1) == 1
-        status.push('〇')    # 新しいデータが先頭になるように格納
-      else
-        status.push('×')
-      end
-    end
-    status
-  end
+  # # 二進数データをview表示の形式に置き換える　（HabitsAchievedStatusesControllerにもう一個同じメソッドがあるので統合する必要あり）
+  # def set_achieved_status(num_days, achieved_or_not_binary)
+  #   status = []
+  #   num_days.times do |i|
+  #     # 新しい順に判定する
+  #     if ((achieved_or_not_binary >> i) & 1) == 1
+  #       status.push('〇')    # 新しいデータが先頭になるように格納
+  #     else
+  #       status.push('×')
+  #     end
+  #   end
+  #   status
+  # end
 end
