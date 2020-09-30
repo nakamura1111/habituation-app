@@ -139,9 +139,9 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
   context '習慣の詳細表示画面で表示されるもの' do
     it '習慣について、表示すべき全ての情報が全て載っている' do
       # 達成状況、達成率の確認のため0以外の数値を入れておく
-      variation_of_days = 10
-      variation_of_time = Time.now - (variation_of_days * 24 * 60 * 60)
-      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: variation_of_days, created_at: variation_of_time)
+      days_of_habit_practice = 11
+      time_of_habit_create = Time.now - ( (days_of_habit_practice-1) * 24 * 60 * 60 )
+      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: days_of_habit_practice, created_at: time_of_habit_create)
       # ログインした上で、習慣の詳細ページへ遷移する
       visit_habit_show_action(@habit.target, @habit)
       # 習慣内容、習慣達成率、習慣の難易度、達成状況、習慣の詳細内容が表示されていることを確認する
