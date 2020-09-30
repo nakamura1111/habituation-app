@@ -32,7 +32,12 @@ class HabitsController < ApplicationController
   end
 
   def show
-
+    # 達成状況を 01 -> ×〇 に変換
+    @achieved_status = Habit.set_achieved_status(@habit.achieved_or_not_binary)
+    # 達成率の算出
+    passed_days = ( Date.today - @habit.created_at.to_date ).to_i
+    @achieved_ratio = @habit.achieved_days.to_f / passed_days * 100
+    @achieved_ratio.to_i
   end
 
   private

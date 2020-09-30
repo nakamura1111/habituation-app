@@ -13,6 +13,9 @@ consumer.subscriptions.create("TargetsAchievedStatusChannel", {
     // Called when there's incoming data on the websocket for this channel
     // レベルを反映する(レベルが変化していたら、レベルの修飾を変える)
     const targetLevel = document.getElementById("target-level");
+    if (targetLevel == null) { // 遷移先のビューファイルによっては表示されていないことがあるため、設定
+      return
+    }
     if ( targetLevel.innerHTML.indexOf(`Lv. ${data.content.level}`) == -1 ) {
       targetLevel.innerHTML = `Lv. ${data.content.level} - Level up!`;
       targetLevel.style.color = 'red';
