@@ -5,11 +5,11 @@ RSpec.describe '習慣の登録機能', type: :system do
     @habit = FactoryBot.build(:habit)
     @habit.target.save
   end
-  context '達成目標が登録できるとき' do
-    it '達成目標とその能力値名を入力したとき、登録される' do
+  context '習慣が登録できるとき' do
+    it '習慣とその能力値名を入力したとき、登録される' do
       # ログインして、習慣登録ページに遷移
       visit_habit_new_action(@habit.target)
-      # 達成目標の登録フォームに入力する
+      # 習慣の登録フォームに入力する
       fill_in 'habit_name', with: @habit.name
       fill_in 'habit_content', with: @habit.content
       select Difficulty.find(@habit.difficulty_grade).name, from: 'habit[difficulty_grade]'
@@ -21,8 +21,8 @@ RSpec.describe '習慣の登録機能', type: :system do
       expect(current_path).to eq(target_path(@habit.target))
     end
   end
-  context '達成目標が登録できないとき' do
-    it '未ログインユーザは達成目標の登録画面に遷移できない' do
+  context '習慣が登録できないとき' do
+    it '未ログインユーザは習慣の登録画面に遷移できない' do
       # 習慣の登録画面へ遷移する
       visit new_target_habit_path(@habit.target)
       # ログインページであることを確認する
@@ -31,7 +31,7 @@ RSpec.describe '習慣の登録機能', type: :system do
     it '入力内容が空の場合、登録できない' do
       # ログインして、習慣登録ページに遷移
       visit_habit_new_action(@habit.target)
-      # 達成目標の登録フォームの入力
+      # 習慣の登録フォームの入力
       fill_in 'habit_name', with: ''
       fill_in 'habit_content', with: ''
       # 登録ボタンを押しても、出品情報がDBに登録されていないことを確認する
@@ -45,30 +45,48 @@ RSpec.describe '習慣の登録機能', type: :system do
 end
 
 RSpec.describe '習慣の達成チェック機能', type: :system do
-  before do
+  before(:each) do
     @habit = FactoryBot.create(:habit)
     @target = @habit.target
     @prev_point = 9
     @target.update(point: @prev_point)
   end
   context '習慣達成の記録ができるとき' do
-    it '達成状況のクリックすると登録される' do
+    it '目標詳細表示ページにて達成状況のクリックすると登録される' do
       # ログインして、目標の詳細ページに遷移
       visit_target_show_action(@target)
       # 今日の日付のクリックして、達成状況を更新する
       find("#achieved-check-cell-#{@habit.id}").click_link('達成したらチェック')
       # 目標詳細表示画面に遷移していることを確認する
       expect(current_path).to eq(target_path(@target))
-      # 達成状況が反映されていることを確認する
+      # 達成状況がDBとページに反映されていることを確認する
       @habit.reload
       expect(@habit.achieved_or_not_binary).to eq(1)
       expect(@habit.achieved_days).to eq(1)
       expect(all('tr.achieved-status-row th')[6]).to have_content('〇')
-      # レベル・経験値が反映されていることを確認する
+      # レベル・経験値がDBとページに反映されていることを確認する
       @target.reload
       expect(@target.point).to eq(@prev_point + @habit.difficulty_grade + 1) # point
       expect(find('.target-level').text).to eq("Lv. #{@target.level} - Level up!")   # level
       expect(find('.exp-bar')[:value].to_i).to eq(@target.exp)                       # exp
+    end
+    it '習慣の詳細表示ページにて達成状況のクリックすると登録される' do
+      # ログインして、習慣の詳細ページに遷移
+      visit_habit_show_action(@target, @habit)
+      # 今日の日付のクリックして、達成状況を更新する
+      find("#achieved-check-cell-#{@habit.id}").click_link('達成したらチェック')
+      # 習慣詳細表示画面に遷移していることを確認する
+      expect(current_path).to eq(target_habit_path(@target, @habit))
+      # 達成状況がDBとページに反映されていることを確認する
+      @habit.reload
+      expect(@habit.achieved_or_not_binary).to eq(1)
+      expect(@habit.achieved_days).to eq(1)
+      expect(all('tr.achieved-status-row th')[6]).to have_content('〇')
+      # レベル・経験値がDBに反映されていることを確認する
+      @target.reload
+      expect(@target.point).to eq(@prev_point + @habit.difficulty_grade + 1) # point
+      expect(@target.level).to eq(2)                                         # level
+      expect(@target.exp).to eq(@habit.difficulty_grade)                     # exp
     end
   end
 end 
@@ -94,6 +112,57 @@ RSpec.describe '日付変更による達成状況を変更する機能', type: :
         visit target_path(@target)
         confirm_achieved_status(@habit.achieved_or_not_binary)
       end
+    end
+  end
+end
+
+RSpec.describe '習慣の詳細表示機能', type: :system do
+  before do
+    @habit = FactoryBot.create(:habit)
+  end
+  context '習慣の詳細表示画面へ遷移できるとき' do
+    it 'ログイン状態で遷移できる' do
+      # ログインした上で、習慣の詳細ページへ遷移する
+      visit_habit_show_action(@habit.target, @habit)
+      # 無事遷移できていることを確認する
+      expect(current_path).to eq(target_habit_path(@habit.target, @habit))
+    end
+  end
+  context '習慣の詳細表示画面へ遷移できないとき' do
+    it '未ログイン状態では遷移できない' do
+      # 習慣の詳細ページへ遷移する
+      visit target_habit_path(@habit.target, @habit)
+      # ログインページであることを確認する
+      expect(current_path).to eq(new_user_session_path)
+    end
+  end
+  context '習慣の詳細表示画面で表示されるもの' do
+    it '習慣について、表示すべき全ての情報が全て載っている' do
+      # 達成状況、達成率の確認のため0以外の数値を入れておく
+      variation_of_days = 10
+      variation_of_time = Time.now - (variation_of_days*24*60*60) 
+      @habit.update( achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: variation_of_days, created_at: variation_of_time )
+      # ログインした上で、習慣の詳細ページへ遷移する
+      visit_habit_show_action(@habit.target, @habit)
+      # 習慣内容、習慣達成率、習慣の難易度、達成状況、習慣の詳細内容が表示されていることを確認する
+      habit_element = find('.habit-box')
+      # 習慣の内容
+      expect(habit_element.find('.habit-name')).to have_content(@habit.name)
+      # 達成率
+      expect(habit_element.find('.habit-achieved-ratio')).to have_content("達成率：100.0 %")
+      # 難易度
+      expect(habit_element.find('.habit-difficulty')).to have_content("難易度：#{Difficulty.find(@habit.difficulty_grade).name}")
+      # 達成状況
+      display_achieved_status(habit_element)
+      # 習慣の詳細
+      expect(habit_element.find('.habit-content-box')).to have_content(@habit.content)
+    end
+    it '達成率の違いでclass属性が異なる'
+    it '目標詳細ページへのリンクが踏める' do
+      # ログインした上で、習慣の詳細ページへ遷移する
+      visit_habit_show_action(@habit.target, @habit)
+      # 目標詳細へのリンクが踏めることを確認する
+      expect(page).to have_link('目標の詳細', href: target_path(@habit.target))
     end
   end
 end

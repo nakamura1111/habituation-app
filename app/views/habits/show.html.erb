@@ -7,14 +7,14 @@
   <%# /目標詳細表示の説明 %>
   <%# 習慣詳細 %>
   <div class="nes-container with-title habit-box">
-    <h3 class='title'><%= @habit.name %></h3>
+    <h3 class='title habit-name'><%= @habit.name %></h3>
     <%# 習慣達成率 %>
     <% if @achieved_ratio >= 4.0/7*100 %>
-    <p class="nes-text is-success"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <p class="habit-achieved-ratio nes-text is-success"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
     <% elsif @achieved_ratio >= 1.0/7*100 %>
-    <p class="nes-text is-error"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <p class="habit-achieved-ratio nes-text is-warning"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
     <% else %>
-    <p class="nes-text is-warning"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
+    <p class="habit-achieved-ratio nes-text is-error"><%= '達成率：' %><%= "#{@achieved_ratio} %" %></p>
     <% end %>
     <%# 難易度、達成状況 %>
     <%= render partial: "shared/habit_desc", locals: {habit: @habit, achieved_status: @achieved_status} %>
