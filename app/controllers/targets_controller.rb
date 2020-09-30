@@ -24,7 +24,7 @@ class TargetsController < ApplicationController
     # 達成状況を配列形式に変換
     @achieved_statuses = []
     @target.habits.each do |habit|
-      @achieved_statuses << Habit.set_achieved_status(habit.achieved_or_not_binary)
+      @achieved_statuses << Habit.translate_achieved_status(habit.achieved_or_not_binary)
     end
   end
 
