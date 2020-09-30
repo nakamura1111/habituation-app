@@ -48,7 +48,9 @@
     <h3 class="title"><%= "鍛錬メニュー" %></h3>
     <% @target.habits.each_with_index do |habit, i| %>
     <div class="nes-container with-title habit-box">
-      <h3 class='title'><%= habit.name %></h3>
+      <h3 class='title'>
+        <%= link_to habit.name, target_habit_path(@target, habit), method: :get, id: "habit-show-#{habit.id}" %>
+      </h3>
       <p><%= '難易度：' %><%= Difficulty.find(habit.difficulty_grade).name %></p>
       <%# 達成状況を表示するテーブル %>
       <h3><%= '達成状況' %></h3>

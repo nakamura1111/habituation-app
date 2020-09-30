@@ -1,6 +1,7 @@
 # 習慣に関する機能を実装するためのコントローラー
 class HabitsController < ApplicationController
-  before_action :current_target, only: %i[new create]
+  before_action :current_target, only: %i[new create show]
+  before_action :current_habit, only: %i[update_achieved_status show]
 
   def new
     @habit = Habit.new
@@ -13,12 +14,11 @@ class HabitsController < ApplicationController
       redirect_to target_path(@habit.target)
     else
       flash[:error] = '鍛錬内容の登録失敗'
-      render 'new'
+      render :new
     end
   end
 
   def update_achieved_status
-    @habit = Habit.find(params[:habit_id])
     if update_transaction(@habit)
       @habit.reload
       flash[:success] = '更新しました'
@@ -31,6 +31,10 @@ class HabitsController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   private
 
   def habit_params
@@ -39,6 +43,10 @@ class HabitsController < ApplicationController
 
   def current_target
     @target = Target.find(params[:target_id])
+  end
+
+  def current_habit
+    @habit = Habit.find(params[:id])
   end
 
   # 達成状況と能力値の変動をDBに記録するメソッド
