@@ -21,11 +21,11 @@ module HabitSupport
   def confirm_achieved_status(achieved_or_not_binary)
     days = 7
     days.times do |i|
-      if ( achieved_or_not_binary>>(days-1-i) & 1 ) == 1
-        display = '〇'
-      else
-        display = '×'
-      end
+      display = if (achieved_or_not_binary >> (days - 1 - i) & 1) == 1
+                  '〇'
+                else
+                  '×'
+                end
       expect(all('tr.achieved-status-row th')[i]).to have_content(display)
     end
   end

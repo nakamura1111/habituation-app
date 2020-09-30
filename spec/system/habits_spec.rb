@@ -89,7 +89,7 @@ RSpec.describe '習慣の達成チェック機能', type: :system do
       expect(@target.exp).to eq(@habit.difficulty_grade)                     # exp
     end
   end
-end 
+end
 
 RSpec.describe '日付変更による達成状況を変更する機能', type: :system do
   before do
@@ -106,7 +106,7 @@ RSpec.describe '日付変更による達成状況を変更する機能', type: :
       confirm_achieved_status(@habit.achieved_or_not_binary)
       # 日付を跨ぐ
       time_now = Time.now
-      travel_to Time.zone.local(time_now.year, time_now.mon, time_now.day+1, 0, 0, 1) do
+      travel_to Time.zone.local(time_now.year, time_now.mon, time_now.day + 1, 0, 0, 1) do
         # 目標達成状況が正しく反映されていることを確認する
         @habit.reload
         visit target_path(@target)
@@ -140,8 +140,8 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
     it '習慣について、表示すべき全ての情報が全て載っている' do
       # 達成状況、達成率の確認のため0以外の数値を入れておく
       variation_of_days = 10
-      variation_of_time = Time.now - (variation_of_days*24*60*60) 
-      @habit.update( achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: variation_of_days, created_at: variation_of_time )
+      variation_of_time = Time.now - (variation_of_days * 24 * 60 * 60)
+      @habit.update(achieved_or_not_binary: Faker::Number.between(from: 1, to: (1 << 7) - 1), achieved_days: variation_of_days, created_at: variation_of_time)
       # ログインした上で、習慣の詳細ページへ遷移する
       visit_habit_show_action(@habit.target, @habit)
       # 習慣内容、習慣達成率、習慣の難易度、達成状況、習慣の詳細内容が表示されていることを確認する
@@ -149,7 +149,7 @@ RSpec.describe '習慣の詳細表示機能', type: :system do
       # 習慣の内容
       expect(habit_element.find('.habit-name')).to have_content(@habit.name)
       # 達成率
-      expect(habit_element.find('.habit-achieved-ratio')).to have_content("達成率：100.0 %")
+      expect(habit_element.find('.habit-achieved-ratio')).to have_content('達成率：100.0 %')
       # 難易度
       expect(habit_element.find('.habit-difficulty')).to have_content("難易度：#{Difficulty.find(@habit.difficulty_grade).name}")
       # 達成状況
