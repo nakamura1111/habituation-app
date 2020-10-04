@@ -10,12 +10,30 @@ https://habituation-app.herokuapp.com/
 
 # 利用方法
 1. ニックネームとemailアドレスとパスワードを設定し、ユーザ登録を行う。
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.11.31.png)
 
-1. 目標の内容とその目標の指標となる能力値の名前を記述する。
-1. 能力値を向上させるための鍛錬（習慣）の内容を入力する。
-1. 鍛錬が達成できたら、チェックをつける。
-1. 達成度に応じ経験値が得られる。（レベルが上がる。）
-1. 中間目標や以前と比べて変化があったらその内容を記入できる。経験値がもらえる。
+2. 目標の内容とその目標の指標となる能力値の名前を記述する。
+  - 目標設定画面に移動
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.15.00.png)
+  - 目標の設定
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.16.13.png)
+
+3. 能力値を向上させるための鍛錬（習慣）の内容を入力する。
+  - 設定した目標の詳細内容を確認できるページへ移動
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.16.29.png)
+  - 習慣にしたい内容を登録する画面に移動
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.16.47.png)
+  - 習慣にしたい内容の設定
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.19.36.png)
+
+4. 鍛錬が達成できたら、チェックをつける。
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.20.12.png)
+
+5. 達成度に応じ経験値が得られる。（レベルが上がる。）
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2019.20.42.png)
+
+6. 中間目標や以前と比べて変化があったらその内容を記入できる。経験値がもらえる。
+![画像がないよ]()
 
 # 目指した課題解決
 達成したい目標・定期的に行うこと・達成できたことを記載してもらい、その達成度に応じて自身のレベルが上がることで、成長を実感しながら習慣化を目指すアプリ
@@ -35,7 +53,7 @@ https://habituation-app.herokuapp.com/
 |実績の編集|中間目標など事前にたてた実績を達成したことを記録する|
 
 # データベース設計
-[こちらを参照](https://github.com/nakamura1111/habituation-app/blob/master/public/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2018.53.12.png)
+![画像がないよ](https://github.com/nakamura1111/habituation-app/blob/master/public/photos_for_README/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202020-10-04%2018.53.12.png)
 
 # ローカルでの動作方法、開発環境
 Rails 6.0.3.3
